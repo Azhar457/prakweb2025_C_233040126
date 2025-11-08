@@ -2,7 +2,7 @@
 
 define("BASEURL", "http://localhost/pertemuan2/tugas/public/");
 
-// DATANASE
+// Database
 define('DB_HOST', 'localhost');
 define('DB_USER', 'root');
 define('DB_PASS', '@Fixrot234');

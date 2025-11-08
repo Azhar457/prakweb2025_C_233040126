@@ -22,7 +22,7 @@
                 <tr>
                     <td><?= htmlspecialchars($user['name']); ?></td>
                     <td><?= htmlspecialchars($user['email']); ?></td>
-                    <td><a href="index.php?id=<?= $user['id']; ?>" class="btn-small">Detail</a></td>
+                    <a href="<?= BASEURL; ?>/user/detail/<?= $user['id']; ?>" class="btn-small">Detail</a>
                 </tr>
                 <?php endforeach; ?>
             </tbody>

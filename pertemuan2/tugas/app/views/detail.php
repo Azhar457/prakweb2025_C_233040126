@@ -9,7 +9,7 @@
     <div class="container">
         <h1>Selamat Datang, <?= htmlspecialchars($user['name']) ?></h1>
         <p>Email : <?= htmlspecialchars($user['email']) ?></p>
-        <a href="http://localhost/pertemuan2/tugas/public/" class="btn"> Kembali Ke Daftar</a>
+        <a href="<?= BASEURL; ?>" class="btn"> Kembali Ke Daftar</a>
     </div>
 </body>
 </html>
