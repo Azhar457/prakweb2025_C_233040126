@@ -1,6 +1,6 @@
 <?php
 
-define("BASEURL", "http://localhost/pertemuan2/tugas/public/");
+define("BASEURL", "http://localhost/pertemuan2/tugas/public");
 
 // Database
 define('DB_HOST', 'localhost');

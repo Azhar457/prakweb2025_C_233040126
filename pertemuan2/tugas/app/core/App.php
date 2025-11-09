@@ -1,57 +1,52 @@
 <?php
 
-
 class App
 {
-    // property
+    // Properti (Pastikan defaultnya juga PascalCase)
     protected $controller = 'Home';
     protected $method = 'index';
     protected $params = [];
 
-    // method
+    // Method
     public function __construct()
     {
         $url = $this->parseURL();
+
         if (isset($url[0])) {
-            // controler
-            if (file_exists('../app/controllers/' . $url[0] . '.php')) {
-                // jadi kontroler
-                $this->controller = $url[0];
-                // hilangin array ke 0
+            // Ubah URL (misal: 'user') menjadi Nama Class (misal: 'User')
+            $controllerName = ucfirst($url[0]);
+            if (file_exists('../app/controllers/' . $controllerName . '.php')) {
+                $this->controller = $controllerName;
                 unset($url[0]);
             }
         }
+
+        // Load controller jika gagal
         require_once '../app/controllers/' . $this->controller . '.php';
 
-        // mereka dapat controller dari sini buat di intansiasi
         $this->controller = new $this->controller;
 
-        // method
+        // Method
         if (isset($url[1])) {
-            // dari intansiasi controler atas
             if (method_exists($this->controller, $url[1])) {
                 $this->method = $url[1];
                 unset($url[1]);
             }
         }
 
-        // parameter
+        // Parameter
         if (!empty($url)) {
-            // var_dump($url);
             $this->params = array_values($url);
         }
 
-        // jalankan controller dan method serta params jika ada
-
+        // Jalankan controller & method, serta kirimkan params jika ada
         call_user_func_array([$this->controller, $this->method], $this->params);
     }
 
     public function parseURL()
     {
         if (isset($_GET['url'])) {
-            // slash akhir jangan ada
             $url = rtrim($_GET['url'], '/');
-            // bersihin
             $url = filter_var($url, FILTER_SANITIZE_URL);
             $url = explode('/', $url);
             return $url;

@@ -7,7 +7,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Selamat Datang, <?= htmlspecialchars($user['name']) ?></h1>
+        <h1>Selamat Datang, <?= htmlspecialchars($user['name']); ?></h1>
         <p>Email : <?= htmlspecialchars($user['email']) ?></p>
         <a href="<?= BASEURL; ?>" class="btn"> Kembali Ke Daftar</a>
     </div>

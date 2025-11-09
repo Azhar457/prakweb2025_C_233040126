@@ -6,7 +6,7 @@ class Home extends Controller
     public function index()
     {
         $data['judul'] = 'Home';
-        $data['nama'] =  "Home";
+        $data['nama'] =  "Azhar";
         // head
         $this->view('templates/header', $data);
 

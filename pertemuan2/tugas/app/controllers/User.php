@@ -1,12 +1,14 @@
 <?php
-class user extends Controller
+class User extends Controller
 {
     public function index ()
     {
-        $data["judul"] = "Data User";
+        $data["judul"] = "user";
         $data["users"] = $this->model("User_model")->getAllUsers();
         $this->view('list',$data);
     }
+
+    
 
     public function detail($id)
     {
