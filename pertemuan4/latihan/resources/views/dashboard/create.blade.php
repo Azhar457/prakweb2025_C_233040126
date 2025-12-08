@@ -4,7 +4,7 @@
         Create New Post - Dashboard
     </x-slot:title>
 
-    <div class="max-w-2xl mx-auto">
+    <div class="max-w-4xl mx-auto">
         {{-- Header --}}
         <div class="mb-6">
             <h1 class="text-3xl font-bold text-gray-800 mb-2">Create New Post</h1>

@@ -9,6 +9,6 @@
      <link href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css" rel="stylesheet" />
 </head>
 <body class="bg-gray-50 text-gray-800">
-    <h1>{{ $header }}</h1>
+    {{ $slot }}
 </body>
 </html>

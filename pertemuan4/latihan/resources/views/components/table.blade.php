@@ -32,6 +32,7 @@
         <thead class="text-sm text-body bg-neutral-secondary-soft border-b rounded-base border-default">
             <tr>
                 <th scope="col" class="px-6 py-3 font-medium">No</th>
+                <th scope="col" class="px-6 py-3 font-medium">Image</th>
                 <th scope="col" class="px-6 py-3 font-medium">Title</th>
                 <th scope="col" class="px-6 py-3 font-medium">Category</th>
                 <th scope="col" class="px-6 py-3 font-medium">Published At</th>
@@ -43,6 +44,13 @@
                 <tr class="bg-neutral-primary border-b border-default">
                     <td class="px-6 py-4">
                         {{ $posts->firstItem() + $loop->index }}
+                    </td>
+                    <td class="px-6 py-4">
+                    @if($post->image)
+                    <img src="{{ asset('storage/' .$post->image) }}" alt="{{ $post->title }}" class="w-16 h-16 rounded-base object-cover">
+                    @else
+                    <img id="preview" class="w-32 h-32 rounded-base object-cover border border-default bg-gray-100" src="{{ asset('images/preview.jpg') }}" alt="Image preview">
+                    @endif
                     </td>
                     <th scope="row" class="px-6 py-4 font-medium text-heading whitespace-nowrap">
                         {{ $post->title }}
