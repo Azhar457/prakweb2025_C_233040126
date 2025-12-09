@@ -14,8 +14,9 @@
             </div>
 
             @if($post->image)
-                <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" 
-                     class="w-full h-64 object-cover rounded-lg mb-6">
+                <div style="max-height: 350px; overflow:hidden;">
+                    <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" class="w-full h-64 object-cover rounded-lg mb-6">
+                </div>
             @endif
         </header>
 

@@ -1,4 +1,4 @@
-<form action="{{ route('dashboard.store') }}" method="POST" class="space-y-6">
+<form action="{{ route('dashboard.store') }}" method="POST" class="space-y-6" enctype="multipart/form-data">
     @csrf
     
     <div class="space-y-6 bg-white border border-gray-200 rounded-lg shadow-sm p-6 dark:bg-gray-800 dark:border-gray-700">
@@ -14,7 +14,7 @@
             <div class="col-span-2">
                 <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
                 <input type="text" name="title" id="title" value="{{ old('title') }}" 
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 shadow-sm @error('title') border-red-500 @enderror" 
                     placeholder="Enter a catchy title" required>
                 @error('title')
                     <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
@@ -25,7 +25,7 @@
             <div class="col-span-2 md:col-span-1">
                 <label for="category_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
                 <select name="category_id" id="category_id" 
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 shadow-sm @error('category_id') border-red-500 @enderror" required>
                     <option value="" selected disabled>Select a category</option>
                     @foreach($categories as $category)
                         <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
@@ -42,7 +42,7 @@
             <div class="col-span-2">
                 <label for="excerpt" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Excerpt <span class="text-gray-400 font-normal">(Optional)</span></label>
                 <textarea name="excerpt" id="excerpt" rows="2" 
-                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 shadow-sm @error('excerpt') border-red-500 @enderror" 
                     placeholder="Brief summary of your post...">{{ old('excerpt') }}</textarea>
                 @error('excerpt')
                     <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
@@ -53,20 +53,24 @@
             <div class="col-span-2">
                 <label for="body" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Content</label>
                 <textarea name="body" id="body" rows="8" 
-                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 shadow-sm @error('body') border-red-500 @enderror" 
                     placeholder="Write your article here..." required>{{ old('body') }}</textarea>
                 @error('body')
                     <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
                 @enderror
             </div>
-
-            form.balde.php.php
+            
             {{-- Image Upload --}}
             <div class="col-span-2">
-             <label for="image" class="block mb-2.5 text-sm font-medium text-heading">Upload Image</label>
-             <input type="file" name="image" id="image" accept="image/png, image/jpeg, image/jpg"class="cursor-pointer bg-neutral-secondary-medium border text-heading text-sm
-            rounded-base focus:ring-brand focus: border-brand block w-full shadow-xs placeholder:text-body">
+             <label for="image" class="block mb-2.5 text-sm font-medium text-gray-900 dark:text-white">Upload Image</label>
+             <input type="file" name="image" id="image" accept="image/png, image/jpeg, image/jpg" class="cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm placeholder-gray-400 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white @error('image') border-red-500 @enderror">
+             <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG or GIF (MAX. 2MB).</p>
+             @error('image')
+                <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
+             @enderror
             </div>
+
+        </div>
 
         {{-- Form Actions --}}
         <div class="flex items-center justify-end space-x-4 border-t border-gray-200 pt-4 mt-4 dark:border-gray-700">
