@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique(); // Tambahkan unique agar nama kategori tidak kembar
+            $table->string('slug')->unique(); // INI YANG KURANG
             $table->timestamps();
         });
     }

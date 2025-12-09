@@ -13,31 +13,26 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        // Jika request datang dari route dashboard, tampilkan view dashboard
+        // Check if the request is for the dashboard
         if (request()->is('dashboard/categories*')) {
             return view('dashboard.categories.index', [
                 'categories' => Category::latest()->paginate(10)
             ]);
         }
 
-        // Default untuk public view (jika ada)
+        // Default public view
         return view('categories', [
             'title' => 'Post Categories',
             'categories' => Category::all()
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    // ... other methods (create, store, edit, update, destroy) ...
     public function create()
     {
         return view('dashboard.categories.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -51,17 +46,6 @@ class CategoryController extends Controller
         return redirect()->route('categories.index')->with('success', 'New category has been added!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Category $category)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Category $category)
     {
         return view('dashboard.categories.edit', [
@@ -69,16 +53,12 @@ class CategoryController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Category $category)
     {
         $rules = [
             'name' => 'required|max:255',
         ];
 
-        // Jika nama berubah, cek unique. Jika tidak, abaikan.
         if($request->name != $category->name) {
             $rules['name'] = 'required|max:255|unique:categories';
         }
@@ -91,12 +71,9 @@ class CategoryController extends Controller
         return redirect()->route('categories.index')->with('success', 'Category has been updated!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Category $category)
     {
         Category::destroy($category->id);
         return redirect()->route('categories.index')->with('success', 'Category has been deleted!');
     }
-}ya
+}

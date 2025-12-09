@@ -13,16 +13,6 @@ Route::get('/welcome', function (){
     return view('welcome');
 });
 
-
-// Route Dashboard Posts (Resource)
-Route::resource('/dashboard', DashboardPostController::class)
-    ->middleware(['auth', 'verified'])
-    ->parameters(['dashboard' => 'post']);
-
-// Route Dashboard Categories (Resource)
-Route::resource('/dashboard/categories', CategoryController::class)
-    ->middleware('auth'); 
-    
 // Route Public
 Route::get('/', [PageController::class, 'home']);
 Route::get('/about', [PageController::class, 'about']);
@@ -30,11 +20,11 @@ Route::get('/blog', [PageController::class, 'blog']);
 Route::get('/contact', [PageController::class, 'contact']);
 Route::get('categories', [CategoryController::class, 'index'])->name('Category.index');
 
-// Route Posts (Hanya bisa diakses jika login)
+// Route Posts (Public)
 Route::get('posts', [PostController::class, 'index'])->middleware('auth')->name('posts.index');
 Route::get('posts/{post:slug}', [PostController::class, 'show'])->middleware('auth')->name('posts.show');
 
-// Route Guest (Hanya bisa diakses jika BELUM login)
+// Route Guest
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
     Route::post('register', [RegisterController::class, 'register']);
@@ -43,20 +33,17 @@ Route::middleware('guest')->group(function () {
     Route::post('login', [LoginController::class, 'login']);
 });
 
-
-
-// Route Logout (Wajib POST)
+// Route Logout
 Route::post('logout', [LoginController::class, 'logout'])->middleware('auth')->name('logout');
 
-// Route untuk dashboard posts - hanya untuk yang sudah login
-// Index - Menampilkan semua posts milik user
-Route::get('/dashboard', [DashboardPostController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard.index');
 
-// Create - Form untuk membuat post baru
-Route::get('/dashboard/create', [DashboardPostController::class, 'create'])->middleware(['auth', 'verified'])->name('dashboard.create');
+// --- ROUTE DASHBOARD ---
+Route::middleware(['auth', 'verified'])->group(function () {
 
-// Store - Menyimpan post baru
-Route::post('/dashboard', [DashboardPostController::class, 'store'])->middleware(['auth', 'verified'])->name('dashboard.store');
+    // 1. Dashboard Categories (WAJIB DI ATAS agar tidak dianggap sebagai slug post)
+    Route::resource('/dashboard/categories', CategoryController::class);
 
-// Show - Menampilkan detail post berdasarkan slug
-Route::get('/dashboard/{post:slug}', [DashboardPostController::class, 'show'])->middleware(['auth', 'verified'])->name('dashboard.show');
+    // 2. Dashboard Posts (Resource utama dashboard)
+    Route::resource('/dashboard', DashboardPostController::class)
+        ->parameters(['dashboard' => 'post']); // Parameter jadi {post}
+});

@@ -33,6 +33,6 @@ class DatabaseSeeder extends Seeder
         Category::factory(5)->create();
 
         // Membuat 50 Post secara otomatis (akan otomatis assign ke user dan category yang ada)
-        Post::factory(50)->recycle(User::all())->recycle(Category::all())->create();
+        Post::factory(10)->recycle(User::all())->recycle(Category::all())->create();
     }
 }

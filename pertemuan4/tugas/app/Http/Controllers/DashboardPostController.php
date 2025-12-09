@@ -41,14 +41,22 @@ class DashboardPostController extends Controller
      */
     public function store(Request $request)
     {
+        // 1. VALIDASI DI AWAL (Menggabungkan semua aturan validasi)
         $validatedData = $request->validate([
             'title'       => 'required|max:255',
-            'category_id' => 'required|exists:categories,id',
-            'excerpt'     => 'nullable',
+            'category_id' => 'required|exists:categories,id', // Pastikan ID kategori ada di tabel categories
+            'excerpt'     => 'nullable', 
             'body'        => 'required',
-            'image'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi gambar
+        ], [
+            // Custom Messages (Opsional)
+            'title.required' => 'Field Title wajib diisi',
+            'category_id.required' => 'Field Category wajib dipilih',
+            'image.image' => 'File harus berupa gambar',
+            'image.max' => 'Ukuran gambar maksimal 2MB',
         ]);
 
+        // 2. GENERATE SLUG
         $slug = Str::slug($request->title);
         $originalSlug = $slug;
         $count = 1;
@@ -57,26 +65,29 @@ class DashboardPostController extends Controller
             $count++;
         }
 
+        // 3. HANDLE FILE UPLOAD
         $imagePath = null;
         if ($request->hasFile('image')) {
+            // Store file di storage/app/public/post-images
             $imagePath = $request->file('image')->store('post-images', 'public');
         }
 
+        // 4. GENERATE EXCERPT OTOMATIS (Jika kosong)
         $excerpt = $request->excerpt ?? Str::limit(strip_tags($request->body), 200);
 
+        // 5. SIMPAN KE DATABASE (Hanya sekali!)
         Post::create([
             'title'       => $request->title,
             'slug'        => $slug,
             'category_id' => $request->category_id,
             'excerpt'     => $excerpt,
             'body'        => $request->body,
-            'image'       => $imagePath,
+            'image'       => $imagePath, // Path gambar yang sudah diupload
             'user_id'     => Auth::id(),
         ]);
 
         return redirect()->route('dashboard.index')->with('success', 'Post has been created successfully!');
     }
-
     /**
      * Display the specified resource.
      */
