@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script> -->
+</head>
+
+<body>
+    
+    
+    <h1 id="judul">Ini Judul</h1>
+    <p id="deskripsi">Ini Deskripsi</p>
+    <p>Tulis Judul</p>
+    <input type="text" id="TulisJudul">
+    <p>Tulis Deskripsi</p>
+    <input type="text" id="TulisDeskripsi">
+    <p></p>
+
+
+
+    <button id="klik-judul" onclick="ubahjudul()">ubahjudul</button>
+    <button id="klik-deskripsi" onclick="ubahdeskripsi()">ubahdeskripsi</button>
+    <button id="klik-count" onclick="tambahcount()">tambahcount</button>
+    <button id="klik-count" onclick="resetcount()">resetcount</button>
+    <p id="jumlah">1000</p>
+    <script>
+        const judul = document.getElementById("judul");
+        const deskripsi = document.getElementById("deskripsi");
+        // innerHTML
+        // judul.innerHTML = "<i>Praktikum Web</i>";
+        // deskripsi.innerHTML = "<h1><b>PRAKTIKUM WEB</b></h1>";
+
+        // style
+        // judul.style.backgroundColor = "blue";
+        // deskripsi.style.color = "blue";
+        judul.style.fontSize = "48px";
+        deskripsi.style.fontSize = "24px";
+
+        function ubahjudul() {
+            judul.innerHTML = document.getElementById("TulisJudul").value;
+        }
+
+        function ubahdeskripsi() {
+            deskripsi.innerHTML = document.getElementById("TulisDeskripsi").value;
+        }
+
+        function tambahcount() {
+            let jumlah = document.getElementById("jumlah");
+            let jumlahKlik = parseInt(jumlah.innerHTML);
+            jumlahKlik++;
+            jumlah.innerHTML = jumlahKlik;
+        }
+
+        function resetcount() {
+            let jumlah = document.getElementById("jumlah");
+            let jumlahKlik = jumlah.innerHTML;
+            jumlahKlik = 0;
+            jumlah.innerHTML = jumlahKlik;
+        }
+
+        // // Attribute
+        // judul.setAttribute("class", "judul");
+        // deskripsi.setAttribute("class", "deskripsi");
+
+        // // class
+        // judul.classList.add("judulbaru");
+        // deskripsi.classList.add("deskripsibaru");
+
+        // judul.classList.remove("judul");
+        // deskripsi.classList.remove("deskripsi");
+    </script>
+    <!-- <button id="tombol">Ini Tombol</button> -->
+    <!-- <script src="script.js"></script> -->
+</body>
+
+</html>
